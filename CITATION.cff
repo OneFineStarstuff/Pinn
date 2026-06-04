@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Starstuff"
+  given-names: "One Fine"
+title: "Enterprise AI Agent Interoperability Protocol (EAIP)"
+version: 3.4.1
+date-released: 2025-01-01
+url: "https://github.com/onefinestarstuff/eaip"
