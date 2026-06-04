@@ -1,0 +1,20 @@
+{
+    "title": "Enterprise AI Agent Interoperability Protocol (EAIP)",
+    "description": "The Enterprise AI Agent Interoperability Protocol (EAIP) defines a standard for the secure, scalable, and efficient interaction between AI agents in an enterprise environment. This repository contains the formal technical specification (version 3.4.1) and a collection of experimental AGI blueprints and reinforcement learning simulations.",
+    "version": "3.4.1",
+    "license": "MIT",
+    "creators": [
+        {
+            "name": "Starstuff, One Fine"
+        }
+    ],
+    "keywords": [
+        "AI",
+        "AGI",
+        "Interoperability",
+        "Enterprise",
+        "gRPC",
+        "SPIFFE",
+        "Reinforcement Learning"
+    ]
+}
