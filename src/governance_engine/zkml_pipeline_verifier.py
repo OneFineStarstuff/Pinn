@@ -1,3 +1,6 @@
+import hashlib
+import json
+import time
 
 class ZKMLPipelineVerifier:
     """
@@ -6,6 +9,13 @@ class ZKMLPipelineVerifier:
     """
     def __init__(self, fairness_threshold=0.05):
         self.fairness_threshold = fairness_threshold
+
+    def _generate_commitment(self, data):
+        """
+        Generates a simulated ZK commitment (hash-based).
+        """
+        raw_data = json.dumps(data, sort_keys=True).encode()
+        return hashlib.sha3_512(raw_data).hexdigest()
 
     def calculate_demographic_parity(self, selection_counts, group_sizes):
         """
@@ -41,7 +51,7 @@ class ZKMLPipelineVerifier:
 
     def generate_zk_fairness_proof(self, node_id, selection_data):
         """
-        Generates a simulated ZK-Proof of fairness.
+        Generates a simulated ZK-Proof of fairness with a commitment.
         """
         selection_rates = self.calculate_demographic_parity(
             selection_data['counts'],
@@ -49,12 +59,22 @@ class ZKMLPipelineVerifier:
         )
         is_fair = self.validate_fairness_threshold(selection_rates)
 
+        # Create a commitment to the fairness evaluation
+        commitment_payload = {
+            "node_id": node_id,
+            "rates": selection_rates,
+            "is_fair": is_fair,
+            "threshold": self.fairness_threshold
+        }
+        commitment = self._generate_commitment(commitment_payload)
+
         return {
             "node_id": node_id,
             "proof_type": "DemographicParity",
             "is_fair": is_fair,
-            "attestation": "SIMULATED_ZK_PROOF_V1",
-            "timestamp": "2026-06-12T10:00:00Z"
+            "commitment": commitment,
+            "attestation": "SIMULATED_ZK_PROOF_V2",
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         }
 
 if __name__ == "__main__":
@@ -64,4 +84,4 @@ if __name__ == "__main__":
         "sizes": {"group_a": 100, "group_b": 100}
     }
     proof = verifier.generate_zk_fairness_proof("moe_expert_01", test_data)
-    print(f"Fairness Proof: {proof}")
+    print(f"Fairness Proof: {json.dumps(proof, indent=2)}")
