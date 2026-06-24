@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package eaip.v1;
+
+import "google/protobuf/struct.proto";
+
+message ContextFrame {
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    ACTIVE = 1;
+    FINALIZED = 2;
+  }
+  Status status = 1;
+}
+
+message RCEEnvelope {
+  string trace_id = 1;
+  string root_span_id = 2;
+  string session_id = 3;
+  repeated ContextFrame frames = 5;
+  google.protobuf.Struct session_state = 6;
+  int32 schema_version = 8;
+}
