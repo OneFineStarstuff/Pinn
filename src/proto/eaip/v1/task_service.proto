@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package eaip.v1;
+
+import "eaip/v1/rce_envelope.proto";
+
+message SubmitTaskRequest {
+  RCEEnvelope context = 1;
+  string task_id = 2;
+  bytes payload = 3;
+}
